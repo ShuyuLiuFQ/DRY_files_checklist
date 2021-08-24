@@ -27,6 +27,7 @@ class FindFox:
         self.union_list = sorted(list(union))
         print(len(self.union_list))
 
+    # print report of duplicated files across each repository
     def print_report(self, csv_path='report.csv'):
         data = {
             'models': self.union_list
@@ -40,19 +41,16 @@ class FindFox:
         df = pd.DataFrame(data, columns=column_names)
         df.to_csv(csv_path)
 
-    def union_files(self):
-        pass
-
 
 if __name__ == '__main__':
     root_repo = "C:\\FoxQuilt\\Development"
     servers_spec = {
-        "foxcom-forms-backend": ['models', 'utils'],
-        "foxcom-payment-backend": ['models', 'utils'],
-        "foxden-policy-document-backend": ['models', 'utils'],
-        "foxden-billing": ['models', 'utils'],
-        "foxden-policy-admin": ['models', 'utils'],
-        "foxden-data-transfer": ['models', 'utils'],
+        "foxcom-forms-backend": ['models', 'utils', 'context'],
+        "foxcom-payment-backend": ['models', 'utils', 'context'],
+        "foxden-policy-document-backend": ['models', 'utils', 'context'],
+        "foxden-billing": ['models', 'utils', 'context'],
+        "foxden-policy-admin": ['models', 'utils', 'context'],
+        "foxden-data-transfer": ['models', 'utils', 'context'],
     }
     fox = FindFox(root_repo, servers_spec)
     fox.find_fox()
