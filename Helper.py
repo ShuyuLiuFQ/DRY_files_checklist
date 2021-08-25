@@ -15,7 +15,7 @@ def join_path(curr_abs_path, from_path):
         if from_path_chunks[0] == '.':
             del from_path_chunks[0]
     elif len(from_path_chunks) > 0:
-        return 'from npm_package'
+        return f'*{from_path_chunks[0]}'
     else:
         return None
     while len(from_path_chunks) > 0 and from_path_chunks[0] == '..':

@@ -1,0 +1,108 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 1000px;
+            height: 500px;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"id": "graphql\\common", "label": "graphql\\common", "shape": "dot", "size": 10}, {"id": "graphql\\schema", "label": "graphql\\schema", "shape": "dot", "size": 10}, {"id": "*graphql-tag", "label": "*graphql-tag", "shape": "dot", "size": 10}, {"id": "graphql\\endorsement", "label": "graphql\\endorsement", "shape": "dot", "size": 10}, {"id": "graphql\\invoice", "label": "graphql\\invoice", "shape": "dot", "size": 10}, {"id": "graphql\\payment", "label": "graphql\\payment", "shape": "dot", "size": 10}, {"id": "graphql\\policy", "label": "graphql\\policy", "shape": "dot", "size": 10}, {"id": "graphql\\resolvers", "label": "graphql\\resolvers", "shape": "dot", "size": 10}, {"id": "graphql\\scalars", "label": "graphql\\scalars", "shape": "dot", "size": 10}, {"id": "*@graphql-tools", "label": "*@graphql-tools", "shape": "dot", "size": 10}, {"id": "graphql\\generated\\billing-mongodb", "label": "graphql\\generated\\billing-mongodb", "shape": "dot", "size": 10}, {"id": "mongodb\\COIRecord", "label": "mongodb\\COIRecord", "shape": "dot", "size": 10}, {"id": "mongodb\\Configuration", "label": "mongodb\\Configuration", "shape": "dot", "size": 10}, {"id": "mongodb\\Invoice", "label": "mongodb\\Invoice", "shape": "dot", "size": 10}, {"id": "mongodb\\Payment", "label": "mongodb\\Payment", "shape": "dot", "size": 10}, {"id": "graphql\\scalars\\CanadaProvinceResolver", "label": "graphql\\scalars\\CanadaProvinceResolver", "shape": "dot", "size": 10}, {"id": "graphql\\scalars\\AnswersResolver", "label": "graphql\\scalars\\AnswersResolver", "shape": "dot", "size": 10}, {"id": "mongodb\\ApplicationAnswers", "label": "mongodb\\ApplicationAnswers", "shape": "dot", "size": 10}, {"id": "mongodb\\Rating\\common", "label": "mongodb\\Rating\\common", "shape": "dot", "size": 10}, {"id": "graphql\\scalars\\CanadaTimeZoneResolver", "label": "graphql\\scalars\\CanadaTimeZoneResolver", "shape": "dot", "size": 10}, {"id": "mongodb\\Quote", "label": "mongodb\\Quote", "shape": "dot", "size": 10}, {"id": "graphql\\scalars\\ChangedQuoteObjectResolver", "label": "graphql\\scalars\\ChangedQuoteObjectResolver", "shape": "dot", "size": 10}, {"id": "mongodb\\Policy", "label": "mongodb\\Policy", "shape": "dot", "size": 10}, {"id": "mongodb\\wrapDB", "label": "mongodb\\wrapDB", "shape": "dot", "size": 10}, {"id": "graphql\\scalars\\PolicyDescriptionResolver", "label": "graphql\\scalars\\PolicyDescriptionResolver", "shape": "dot", "size": 10}, {"id": "*mongodb", "label": "*mongodb", "shape": "dot", "size": 10}, {"id": "graphql\\scalars\\ObjectIDResolver", "label": "graphql\\scalars\\ObjectIDResolver", "shape": "dot", "size": 10}, {"id": "mongodb\\ApplicationOwner", "label": "mongodb\\ApplicationOwner", "shape": "dot", "size": 10}, {"id": "mongodb\\ApplicationStatus", "label": "mongodb\\ApplicationStatus", "shape": "dot", "size": 10}, {"id": "mongodb\\CompletedRefund", "label": "mongodb\\CompletedRefund", "shape": "dot", "size": 10}, {"id": "mongodb\\CreditMemo", "label": "mongodb\\CreditMemo", "shape": "dot", "size": 10}, {"id": "mongodb\\FoxcomObject", "label": "mongodb\\FoxcomObject", "shape": "dot", "size": 10}, {"id": "mongodb\\InactivePolicy", "label": "mongodb\\InactivePolicy", "shape": "dot", "size": 10}, {"id": "mongodb\\InProgressPolicy", "label": "mongodb\\InProgressPolicy", "shape": "dot", "size": 10}, {"id": "mongodb\\PaymentResult", "label": "mongodb\\PaymentResult", "shape": "dot", "size": 10}, {"id": "mongodb\\PolicyQuote", "label": "mongodb\\PolicyQuote", "shape": "dot", "size": 10}, {"id": "mongodb\\mutable\\ActivePolicy", "label": "mongodb\\mutable\\ActivePolicy", "shape": "dot", "size": 10}, {"id": "mongodb\\mutable\\MutableFoxdenObject", "label": "mongodb\\mutable\\MutableFoxdenObject", "shape": "dot", "size": 10}, {"id": "*graphql", "label": "*graphql", "shape": "dot", "size": 10}, {"id": "graphql\\scalars\\DateResolver", "label": "graphql\\scalars\\DateResolver", "shape": "dot", "size": 10}, {"id": "graphql\\scalars\\URLResolver", "label": "graphql\\scalars\\URLResolver", "shape": "dot", "size": 10}, {"id": "graphql\\scalars\\utils\\createStringScalarWithSpecificValues", "label": "graphql\\scalars\\utils\\createStringScalarWithSpecificValues", "shape": "dot", "size": 10}, {"id": "*graphql-scalars", "label": "*graphql-scalars", "shape": "dot", "size": 10}, {"id": "mongodb\\Application", "label": "mongodb\\Application", "shape": "dot", "size": 10}, {"id": "mongodb\\BillingCheckResult", "label": "mongodb\\BillingCheckResult", "shape": "dot", "size": 10}, {"id": "mongodb\\PaymentPlanOption", "label": "mongodb\\PaymentPlanOption", "shape": "dot", "size": 10}, {"id": "mongodb\\PolicyPaymentSchedule", "label": "mongodb\\PolicyPaymentSchedule", "shape": "dot", "size": 10}, {"id": "mongodb\\Rating", "label": "mongodb\\Rating", "shape": "dot", "size": 10}, {"id": "mongodb\\Rating\\Canada", "label": "mongodb\\Rating\\Canada", "shape": "dot", "size": 10}, {"id": "mongodb\\Rating\\Ohio", "label": "mongodb\\Rating\\Ohio", "shape": "dot", "size": 10}, {"id": "graphql\\scalars\\utils\\checkISODate", "label": "graphql\\scalars\\utils\\checkISODate", "shape": "dot", "size": 10}, {"id": "*date-fns", "label": "*date-fns", "shape": "dot", "size": 10}, {"id": "mongodb\\general\\Currency", "label": "mongodb\\general\\Currency", "shape": "dot", "size": 10}, {"id": "..\\utils\\timeZone", "label": "..\\utils\\timeZone", "shape": "dot", "size": 10}, {"id": "user\\User", "label": "user\\User", "shape": "dot", "size": 10}, {"id": "mongodb\\PolicyPaymentPlan", "label": "mongodb\\PolicyPaymentPlan", "shape": "dot", "size": 10}, {"id": "payment", "label": "payment", "shape": "dot", "size": 10}, {"id": "mongodb\\mutable\\BillingCheckConfiguration", "label": "mongodb\\mutable\\BillingCheckConfiguration", "shape": "dot", "size": 10}, {"id": "mongodb\\Rating\\index", "label": "mongodb\\Rating\\index", "shape": "dot", "size": 10}]);
+        edges = new vis.DataSet([{"arrows": "to", "from": "graphql\\common", "to": "graphql\\schema", "weight": 1}, {"arrows": "to", "from": "*graphql-tag", "to": "graphql\\common", "weight": 1}, {"arrows": "to", "from": "*graphql-tag", "to": "graphql\\endorsement", "weight": 1}, {"arrows": "to", "from": "*graphql-tag", "to": "graphql\\invoice", "weight": 1}, {"arrows": "to", "from": "*graphql-tag", "to": "graphql\\payment", "weight": 1}, {"arrows": "to", "from": "*graphql-tag", "to": "graphql\\policy", "weight": 1}, {"arrows": "to", "from": "*graphql-tag", "to": "graphql\\resolvers", "weight": 1}, {"arrows": "to", "from": "*graphql-tag", "to": "graphql\\scalars", "weight": 1}, {"arrows": "to", "from": "graphql\\endorsement", "to": "graphql\\schema", "weight": 1}, {"arrows": "to", "from": "graphql\\invoice", "to": "graphql\\schema", "weight": 1}, {"arrows": "to", "from": "graphql\\payment", "to": "graphql\\schema", "weight": 1}, {"arrows": "to", "from": "graphql\\policy", "to": "graphql\\schema", "weight": 1}, {"arrows": "to", "from": "graphql\\resolvers", "to": "graphql\\schema", "weight": 1}, {"arrows": "to", "from": "graphql\\scalars", "to": "graphql\\schema", "weight": 1}, {"arrows": "to", "from": "*@graphql-tools", "to": "graphql\\schema", "weight": 1}, {"arrows": "to", "from": "graphql\\generated\\billing-mongodb", "to": "mongodb\\COIRecord", "weight": 1}, {"arrows": "to", "from": "graphql\\generated\\billing-mongodb", "to": "mongodb\\Configuration", "weight": 1}, {"arrows": "to", "from": "graphql\\generated\\billing-mongodb", "to": "mongodb\\Invoice", "weight": 1}, {"arrows": "to", "from": "graphql\\generated\\billing-mongodb", "to": "mongodb\\Payment", "weight": 1}, {"arrows": "to", "from": "graphql\\scalars\\CanadaProvinceResolver", "to": "graphql\\generated\\billing-mongodb", "weight": 1}, {"arrows": "to", "from": "graphql\\scalars\\AnswersResolver", "to": "graphql\\generated\\billing-mongodb", "weight": 1}, {"arrows": "to", "from": "graphql\\scalars\\AnswersResolver", "to": "mongodb\\ApplicationAnswers", "weight": 1}, {"arrows": "to", "from": "graphql\\scalars\\AnswersResolver", "to": "mongodb\\Rating\\common", "weight": 1}, {"arrows": "to", "from": "graphql\\scalars\\CanadaTimeZoneResolver", "to": "graphql\\generated\\billing-mongodb", "weight": 1}, {"arrows": "to", "from": "graphql\\scalars\\CanadaTimeZoneResolver", "to": "mongodb\\ApplicationAnswers", "weight": 1}, {"arrows": "to", "from": "mongodb\\Quote", "to": "graphql\\generated\\billing-mongodb", "weight": 1}, {"arrows": "to", "from": "mongodb\\Quote", "to": "graphql\\scalars\\ChangedQuoteObjectResolver", "weight": 1}, {"arrows": "to", "from": "mongodb\\Quote", "to": "mongodb\\Policy", "weight": 1}, {"arrows": "to", "from": "mongodb\\Quote", "to": "mongodb\\wrapDB", "weight": 1}, {"arrows": "to", "from": "graphql\\scalars\\PolicyDescriptionResolver", "to": "graphql\\generated\\billing-mongodb", "weight": 1}, {"arrows": "to", "from": "*mongodb", "to": "graphql\\generated\\billing-mongodb", "weight": 1}, {"arrows": "to", "from": "*mongodb", "to": "graphql\\scalars\\ChangedQuoteObjectResolver", "weight": 1}, {"arrows": "to", "from": "*mongodb", "to": "graphql\\scalars\\ObjectIDResolver", "weight": 1}, {"arrows": "to", "from": "*mongodb", "to": "mongodb\\ApplicationAnswers", "weight": 1}, {"arrows": "to", "from": "*mongodb", "to": "mongodb\\ApplicationOwner", "weight": 1}, {"arrows": "to", "from": "*mongodb", "to": "mongodb\\ApplicationStatus", "weight": 1}, {"arrows": "to", "from": "*mongodb", "to": "mongodb\\CompletedRefund", "weight": 1}, {"arrows": "to", "from": "*mongodb", "to": "mongodb\\CreditMemo", "weight": 1}, {"arrows": "to", "from": "*mongodb", "to": "mongodb\\FoxcomObject", "weight": 1}, {"arrows": "to", "from": "*mongodb", "to": "mongodb\\InactivePolicy", "weight": 1}, {"arrows": "to", "from": "*mongodb", "to": "mongodb\\InProgressPolicy", "weight": 1}, {"arrows": "to", "from": "*mongodb", "to": "mongodb\\Invoice", "weight": 1}, {"arrows": "to", "from": "*mongodb", "to": "mongodb\\Payment", "weight": 1}, {"arrows": "to", "from": "*mongodb", "to": "mongodb\\PaymentResult", "weight": 1}, {"arrows": "to", "from": "*mongodb", "to": "mongodb\\Policy", "weight": 1}, {"arrows": "to", "from": "*mongodb", "to": "mongodb\\PolicyQuote", "weight": 1}, {"arrows": "to", "from": "*mongodb", "to": "mongodb\\Quote", "weight": 1}, {"arrows": "to", "from": "*mongodb", "to": "mongodb\\wrapDB", "weight": 1}, {"arrows": "to", "from": "*mongodb", "to": "mongodb\\mutable\\ActivePolicy", "weight": 1}, {"arrows": "to", "from": "*mongodb", "to": "mongodb\\mutable\\MutableFoxdenObject", "weight": 1}, {"arrows": "to", "from": "*graphql", "to": "graphql\\generated\\billing-mongodb", "weight": 1}, {"arrows": "to", "from": "*graphql", "to": "graphql\\scalars\\AnswersResolver", "weight": 1}, {"arrows": "to", "from": "*graphql", "to": "graphql\\scalars\\ChangedQuoteObjectResolver", "weight": 1}, {"arrows": "to", "from": "*graphql", "to": "graphql\\scalars\\DateResolver", "weight": 1}, {"arrows": "to", "from": "*graphql", "to": "graphql\\scalars\\ObjectIDResolver", "weight": 1}, {"arrows": "to", "from": "*graphql", "to": "graphql\\scalars\\URLResolver", "weight": 1}, {"arrows": "to", "from": "*graphql", "to": "graphql\\scalars\\utils\\createStringScalarWithSpecificValues", "weight": 1}, {"arrows": "to", "from": "*graphql-scalars", "to": "graphql\\scalars\\AnswersResolver", "weight": 1}, {"arrows": "to", "from": "*graphql-scalars", "to": "graphql\\scalars\\ChangedQuoteObjectResolver", "weight": 1}, {"arrows": "to", "from": "graphql\\scalars\\utils\\createStringScalarWithSpecificValues", "to": "graphql\\scalars\\CanadaProvinceResolver", "weight": 1}, {"arrows": "to", "from": "graphql\\scalars\\utils\\createStringScalarWithSpecificValues", "to": "graphql\\scalars\\CanadaTimeZoneResolver", "weight": 1}, {"arrows": "to", "from": "graphql\\scalars\\utils\\createStringScalarWithSpecificValues", "to": "graphql\\scalars\\PolicyDescriptionResolver", "weight": 1}, {"arrows": "to", "from": "mongodb\\FoxcomObject", "to": "graphql\\scalars\\ChangedQuoteObjectResolver", "weight": 1}, {"arrows": "to", "from": "mongodb\\FoxcomObject", "to": "mongodb\\Application", "weight": 1}, {"arrows": "to", "from": "mongodb\\FoxcomObject", "to": "mongodb\\ApplicationAnswers", "weight": 1}, {"arrows": "to", "from": "mongodb\\FoxcomObject", "to": "mongodb\\ApplicationOwner", "weight": 1}, {"arrows": "to", "from": "mongodb\\FoxcomObject", "to": "mongodb\\ApplicationStatus", "weight": 1}, {"arrows": "to", "from": "mongodb\\FoxcomObject", "to": "mongodb\\BillingCheckResult", "weight": 1}, {"arrows": "to", "from": "mongodb\\FoxcomObject", "to": "mongodb\\COIRecord", "weight": 1}, {"arrows": "to", "from": "mongodb\\FoxcomObject", "to": "mongodb\\CompletedRefund", "weight": 1}, {"arrows": "to", "from": "mongodb\\FoxcomObject", "to": "mongodb\\CreditMemo", "weight": 1}, {"arrows": "to", "from": "mongodb\\FoxcomObject", "to": "mongodb\\InactivePolicy", "weight": 1}, {"arrows": "to", "from": "mongodb\\FoxcomObject", "to": "mongodb\\InProgressPolicy", "weight": 1}, {"arrows": "to", "from": "mongodb\\FoxcomObject", "to": "mongodb\\Invoice", "weight": 1}, {"arrows": "to", "from": "mongodb\\FoxcomObject", "to": "mongodb\\Payment", "weight": 1}, {"arrows": "to", "from": "mongodb\\FoxcomObject", "to": "mongodb\\PaymentPlanOption", "weight": 1}, {"arrows": "to", "from": "mongodb\\FoxcomObject", "to": "mongodb\\PaymentResult", "weight": 1}, {"arrows": "to", "from": "mongodb\\FoxcomObject", "to": "mongodb\\Policy", "weight": 1}, {"arrows": "to", "from": "mongodb\\FoxcomObject", "to": "mongodb\\PolicyPaymentSchedule", "weight": 1}, {"arrows": "to", "from": "mongodb\\FoxcomObject", "to": "mongodb\\PolicyQuote", "weight": 1}, {"arrows": "to", "from": "mongodb\\FoxcomObject", "to": "mongodb\\Quote", "weight": 1}, {"arrows": "to", "from": "mongodb\\Rating", "to": "graphql\\scalars\\ChangedQuoteObjectResolver", "weight": 1}, {"arrows": "to", "from": "mongodb\\Rating", "to": "mongodb\\Quote", "weight": 1}, {"arrows": "to", "from": "mongodb\\Rating\\common", "to": "graphql\\scalars\\ChangedQuoteObjectResolver", "weight": 1}, {"arrows": "to", "from": "mongodb\\Rating\\common", "to": "mongodb\\Rating\\Canada", "weight": 1}, {"arrows": "to", "from": "mongodb\\Rating\\common", "to": "mongodb\\Rating\\Ohio", "weight": 1}, {"arrows": "to", "from": "graphql\\scalars\\utils\\checkISODate", "to": "graphql\\scalars\\DateResolver", "weight": 1}, {"arrows": "to", "from": "*date-fns", "to": "graphql\\scalars\\utils\\checkISODate", "weight": 1}, {"arrows": "to", "from": "mongodb\\Application", "to": "mongodb\\Policy", "weight": 1}, {"arrows": "to", "from": "mongodb\\Application", "to": "mongodb\\wrapDB", "weight": 1}, {"arrows": "to", "from": "mongodb\\general\\Currency", "to": "mongodb\\Application", "weight": 1}, {"arrows": "to", "from": "mongodb\\general\\Currency", "to": "mongodb\\ApplicationAnswers", "weight": 1}, {"arrows": "to", "from": "mongodb\\general\\Currency", "to": "mongodb\\Invoice", "weight": 1}, {"arrows": "to", "from": "mongodb\\general\\Currency", "to": "mongodb\\Payment", "weight": 1}, {"arrows": "to", "from": "mongodb\\ApplicationAnswers", "to": "mongodb\\Policy", "weight": 1}, {"arrows": "to", "from": "mongodb\\ApplicationAnswers", "to": "mongodb\\wrapDB", "weight": 1}, {"arrows": "to", "from": "mongodb\\ApplicationOwner", "to": "mongodb\\Policy", "weight": 1}, {"arrows": "to", "from": "mongodb\\ApplicationOwner", "to": "mongodb\\wrapDB", "weight": 1}, {"arrows": "to", "from": "mongodb\\ApplicationStatus", "to": "mongodb\\wrapDB", "weight": 1}, {"arrows": "to", "from": "mongodb\\BillingCheckResult", "to": "mongodb\\wrapDB", "weight": 1}, {"arrows": "to", "from": "mongodb\\COIRecord", "to": "mongodb\\wrapDB", "weight": 1}, {"arrows": "to", "from": "mongodb\\CompletedRefund", "to": "mongodb\\wrapDB", "weight": 1}, {"arrows": "to", "from": "mongodb\\Configuration", "to": "mongodb\\wrapDB", "weight": 1}, {"arrows": "to", "from": "mongodb\\CreditMemo", "to": "mongodb\\wrapDB", "weight": 1}, {"arrows": "to", "from": "mongodb\\InactivePolicy", "to": "mongodb\\wrapDB", "weight": 1}, {"arrows": "to", "from": "mongodb\\InProgressPolicy", "to": "mongodb\\wrapDB", "weight": 1}, {"arrows": "to", "from": "mongodb\\Invoice", "to": "mongodb\\Policy", "weight": 1}, {"arrows": "to", "from": "mongodb\\Invoice", "to": "mongodb\\wrapDB", "weight": 1}, {"arrows": "to", "from": "..\\utils\\timeZone", "to": "mongodb\\Invoice", "weight": 1}, {"arrows": "to", "from": "user\\User", "to": "mongodb\\Invoice", "weight": 1}, {"arrows": "to", "from": "mongodb\\PolicyPaymentPlan", "to": "mongodb\\Invoice", "weight": 1}, {"arrows": "to", "from": "mongodb\\PolicyPaymentPlan", "to": "mongodb\\Payment", "weight": 1}, {"arrows": "to", "from": "mongodb\\PolicyPaymentPlan", "to": "mongodb\\PaymentPlanOption", "weight": 1}, {"arrows": "to", "from": "mongodb\\PolicyPaymentPlan", "to": "mongodb\\PolicyPaymentSchedule", "weight": 1}, {"arrows": "to", "from": "mongodb\\Payment", "to": "mongodb\\Policy", "weight": 1}, {"arrows": "to", "from": "mongodb\\Payment", "to": "mongodb\\wrapDB", "weight": 1}, {"arrows": "to", "from": "mongodb\\PaymentPlanOption", "to": "mongodb\\wrapDB", "weight": 1}, {"arrows": "to", "from": "mongodb\\PaymentResult", "to": "mongodb\\Policy", "weight": 1}, {"arrows": "to", "from": "mongodb\\PaymentResult", "to": "mongodb\\wrapDB", "weight": 1}, {"arrows": "to", "from": "payment", "to": "mongodb\\PaymentResult", "weight": 1}, {"arrows": "to", "from": "mongodb\\Policy", "to": "mongodb\\wrapDB", "weight": 1}, {"arrows": "to", "from": "mongodb\\PolicyPaymentSchedule", "to": "mongodb\\wrapDB", "weight": 1}, {"arrows": "to", "from": "mongodb\\PolicyQuote", "to": "mongodb\\wrapDB", "weight": 1}, {"arrows": "to", "from": "mongodb\\mutable\\ActivePolicy", "to": "mongodb\\wrapDB", "weight": 1}, {"arrows": "to", "from": "mongodb\\mutable\\BillingCheckConfiguration", "to": "mongodb\\wrapDB", "weight": 1}, {"arrows": "to", "from": "mongodb\\mutable\\MutableFoxdenObject", "to": "mongodb\\mutable\\ActivePolicy", "weight": 1}, {"arrows": "to", "from": "mongodb\\Rating\\Canada", "to": "mongodb\\Rating\\index", "weight": 1}, {"arrows": "to", "from": "mongodb\\Rating\\Ohio", "to": "mongodb\\Rating\\index", "weight": 1}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
